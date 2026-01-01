@@ -2,9 +2,12 @@ package com.velocity.test;
 
 import java.util.Scanner;
 
+import com.velocity.dao.ProductDao;
 import com.velocity.dao.UserDao;
+import com.velocity.daoimpl.ProductDaoImpl;
 import com.velocity.daoimpl.UserDaoImpl;
 import com.velocity.exception.ProjectException;
+import com.velocity.model.Product;
 import com.velocity.model.User;
 
 public class Test {
@@ -53,7 +56,7 @@ public class Test {
 		    				int choice1 = sc.nextInt();
 		    				switch(choice1) {
 		    				case 1:
-		    					System.out.println("Product Added");
+		    					insertProduct();
 		    					break;
 		    				}
 		    			}
@@ -104,5 +107,27 @@ public class Test {
 		UserDao insertSql = new UserDaoImpl();
 		int data = insertSql.addingUser(user1);
 		System.out.println("Registered " + data);
+	}
+	
+	public static void insertProduct() {
+		Product pro = new Product();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter Product Name : ");
+		pro.setProductName(sc.next());
+		
+		System.out.println("Enter Product Description : ");
+		pro.setProductDescription(sc.next());
+		
+		System.out.println("Enter Quantity : ");
+		pro.setQuantity(sc.nextInt());
+		
+		System.out.println("Enter Price : ");
+		pro.setPrice(sc.nextDouble());
+		
+		ProductDao pro1 = new ProductDaoImpl();
+		int insertPro = pro1.addProduct(pro);
+		System.out.println("Product Added " + insertPro);
 	}
 }
