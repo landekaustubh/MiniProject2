@@ -58,6 +58,9 @@ public class Test {
 		    				case 1:
 		    					insertProduct();
 		    					break;
+		    				case 7:
+		    					exit = false;
+		    					break;
 		    				}
 		    			}
 		    			break;
@@ -65,9 +68,8 @@ public class Test {
 		    		else {
 		    			user2.login(a, b);
 		    		}
-		    		
 		    		break;
-		    	case 15:
+		    	case 7:
 		    		exit = false;
 		    		break;
 		    	}
@@ -115,10 +117,10 @@ public class Test {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter Product Name : ");
-		pro.setProductName(sc.next());
+		pro.setProductName(sc.nextLine());
 		
 		System.out.println("Enter Product Description : ");
-		pro.setProductDescription(sc.next());
+		pro.setProductDescription(sc.nextLine());
 		
 		System.out.println("Enter Quantity : ");
 		pro.setQuantity(sc.nextInt());

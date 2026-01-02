@@ -9,4 +9,5 @@ public interface UserDao {
 	int addingUser(User user);
 	
 	void login(String username,String password);
+	
 }

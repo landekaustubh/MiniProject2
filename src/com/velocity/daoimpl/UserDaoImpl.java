@@ -16,7 +16,9 @@ public class UserDaoImpl implements UserDao{
 			+ "(firstName,lastName,username,password,city,mailId,mobileNumber) "
 			+ "VALUES (?,?,?,?,?,?,?)";
 	
-	private static final String LOGIN="SELECT * FROM users WHERE username = ? AND password = ? "; 
+	private static final String LOGIN="SELECT * FROM users WHERE username = ? AND password = ? ";
+	
+	private static final String AllData="SELECT * FROM users";
 	@Override
 	public int addingUser(User user) {
 		try(Connection con = JdbcConfig.getConnection();
@@ -60,5 +62,4 @@ public class UserDaoImpl implements UserDao{
 			throw new ProjectException("Did Not Found " + e.getMessage());
 		}
 	}
-	
 }

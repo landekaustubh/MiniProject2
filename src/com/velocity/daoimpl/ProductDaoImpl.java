@@ -10,7 +10,7 @@ import com.velocity.model.Product;
 
 public class ProductDaoImpl implements ProductDao{
 
-	private static final String Insert="INSERT INTO productsINSERT INTO products "
+	private static final String Insert="INSERT INTO products"
 			+ "(productName,productDescription,quantity,price) VALUES (?,?,?,?)";
 	
 	@Override
