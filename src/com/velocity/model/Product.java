@@ -2,12 +2,19 @@ package com.velocity.model;
 
 public class Product {
 
+	private int productId;
 	private String productName;
 	private String productDescription;
 	private int quantity;
 	private double price;
 	
 	
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
 	public String getProductName() {
 		return productName;
 	}
@@ -36,8 +43,11 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product [productName=" + productName + ", productDescription=" + productDescription + ", quantity="
-				+ quantity + ", price=" + price + "]";
+		return "\nProduct Id >> " + productId
+		      +"\nProduct Name >> " + productName 
+			  +"\nProduct Description >> " + productDescription
+			  +"\nAvailable Quantity >> " + quantity
+			  +"\nPrice >> " + price + "\n-----------";
 	}
 	
 }

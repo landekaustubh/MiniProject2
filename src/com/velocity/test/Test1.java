@@ -1,10 +1,13 @@
 package com.velocity.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.velocity.dao.UserDao;
 import com.velocity.daoimpl.UserDaoImpl;
 import com.velocity.exception.ProjectException;
+import com.velocity.model.Product;
 import com.velocity.model.User;
 
 public class Test1 {
@@ -49,6 +52,37 @@ public class Test1 {
 				break;
 			}
 		}
+//		public static void buyProductAdded() {
+//			
+//			UserDao ud1 = new UserDaoImpl();
+//			Scanner sc = new Scanner(System.in);
+//			
+//			System.out.println("Enter Product Id ");
+//			int id = sc.nextInt();
+//			
+//			Product pro = ud1.buyProduct(id);
+//			
+//			if(pro != null) {
+//				cart.add(pro);
+//				System.out.println("Product Added");
+//			}
+//			else {
+//				System.out.println("Product Not Added");
+//			}
+//		}
+//		
+//		public static void viewCart() {
+//		    if (cart.isEmpty()) {
+//		        System.out.println("Cart is empty");
+//		    } else {
+//		        System.out.println("Cart Items:");
+//		        for (Product p : cart) {
+//		            System.out.println(p);
+//		        }
+//		    }
+//		}
+//
+//		static List<Product> cart = new ArrayList<>();
 	}
 }
 

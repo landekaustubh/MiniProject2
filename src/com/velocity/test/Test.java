@@ -1,12 +1,17 @@
 package com.velocity.test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import com.velocity.dao.CartDao;
 import com.velocity.dao.ProductDao;
 import com.velocity.dao.UserDao;
+import com.velocity.daoimpl.CartDaoImpl;
 import com.velocity.daoimpl.ProductDaoImpl;
 import com.velocity.daoimpl.UserDaoImpl;
 import com.velocity.exception.ProjectException;
+import com.velocity.model.CartItem;
 import com.velocity.model.Product;
 import com.velocity.model.User;
 
@@ -68,6 +73,16 @@ public class Test {
 		    		else {
 		    			user2.login(a, b);
 		    		}
+		    		break;
+		    	case 3:
+		    		displayAllProducts();
+		    		break;
+		    	case 4:
+		    		buyProduct();
+		    		break;
+		    	case 5:
+		    		CartDao cart2 = new CartDaoImpl();
+		    		cart2.viewCart();
 		    		break;
 		    	case 7:
 		    		exit = false;
@@ -131,5 +146,49 @@ public class Test {
 		ProductDao pro1 = new ProductDaoImpl();
 		int insertPro = pro1.addProduct(pro);
 		System.out.println("Product Added " + insertPro);
+	}
+	
+	public static void displayAllProducts() {
+		UserDao ud1 = new UserDaoImpl();
+ 	   List<Product> list = ud1.findAll();
+ 	   System.out.println(list);
+	}
+	
+	public static void buyProduct() {
+		
+		ProductDao prodao = new ProductDaoImpl();
+		
+		CartDao cart1 = new CartDaoImpl();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter Product Id :");
+		int proId = sc.nextInt();
+		
+		System.out.println("Enter Quantity :");
+		int qty = sc.nextInt();
+		
+		Product pro = prodao.getProductById(proId);
+		
+		if (pro == null) {
+            System.out.println("Product not found");
+        }
+
+        if (qty > pro.getQuantity()) {
+            System.out.println("Insufficient quantity available");
+        }
+
+        CartItem cartItem = new CartItem(pro, qty);
+        cart1.addToCart(cartItem);
+
+        int remainingQty = pro.getQuantity() - qty;
+        prodao.updateProductQuantity(proId, remainingQty);
+
+        System.out.print("Do you want to view cart (Yes/No): ");
+        String option = sc.next();
+
+        if (option.equalsIgnoreCase("Yes")) {
+           int choice = 5;   
+        } 
 	}
 }

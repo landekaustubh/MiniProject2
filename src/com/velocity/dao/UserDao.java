@@ -2,6 +2,7 @@ package com.velocity.dao;
 
 import java.util.List;
 
+import com.velocity.model.Product;
 import com.velocity.model.User;
 
 public interface UserDao {
@@ -10,4 +11,9 @@ public interface UserDao {
 	
 	void login(String username,String password);
 	
+	List<Product> findAll();
+	
+	Product buyProduct(int productId);
+	
+	void purchaseItem();
 }

@@ -3,11 +3,13 @@ package com.velocity.daoimpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.velocity.config.JdbcConfig;
 import com.velocity.dao.UserDao;
 import com.velocity.exception.ProjectException;
+import com.velocity.model.Product;
 import com.velocity.model.User;
 
 public class UserDaoImpl implements UserDao{
@@ -18,7 +20,10 @@ public class UserDaoImpl implements UserDao{
 	
 	private static final String LOGIN="SELECT * FROM users WHERE username = ? AND password = ? ";
 	
-	private static final String AllData="SELECT * FROM users";
+	private static final String DISPLAY="SELECT * FROM products";
+	
+	private static final String BUY_PRODUCT="SELECT * FROM products WHERE productId = ?";
+	
 	@Override
 	public int addingUser(User user) {
 		try(Connection con = JdbcConfig.getConnection();
@@ -61,5 +66,66 @@ public class UserDaoImpl implements UserDao{
 		catch(Exception e) {
 			throw new ProjectException("Did Not Found " + e.getMessage());
 		}
+	}
+	
+	@Override
+		public List<Product> findAll() {
+		List<Product> pro1 = new ArrayList<>();
+		
+		try(Connection con = JdbcConfig.getConnection();
+				PreparedStatement ps = con.prepareStatement(DISPLAY)){
+				
+					ResultSet rs = ps.executeQuery();
+					
+					while(rs.next()) {
+						Product pro2 = new Product();
+						pro2.setProductId(rs.getInt("productId"));
+					    pro2.setProductName(rs.getString("productName"));
+					    pro2.setProductDescription(rs.getString("productDescription"));
+						pro2.setQuantity(rs.getInt("quantity"));
+						pro2.setPrice(rs.getDouble("price"));
+					    
+						pro1.add(pro2);
+					}
+					
+					return pro1;
+				}
+				catch(Exception e) {
+					throw new ProjectException("Data is Not Available " + e.getMessage());
+				}
+		}
+
+	@Override
+	public Product buyProduct(int productId) {
+		
+		Product pro1 = null;
+		try(Connection con = JdbcConfig.getConnection();
+				PreparedStatement ps =  con.prepareStatement(BUY_PRODUCT)){
+				
+					pro1 = new Product();
+					
+					ps.setInt(1, productId);
+					
+					ResultSet rs = ps.executeQuery();
+					
+					while(rs.next()){
+					pro1.setProductId(rs.getInt("productId"));
+					pro1.setProductName(rs.getString("productName"));
+				    pro1.setProductDescription(rs.getString("productDescription"));
+					pro1.setQuantity(rs.getInt("quantity"));
+					pro1.setPrice(rs.getDouble("price"));
+					
+					}
+				}
+				catch(Exception e) {
+					throw new ProjectException("Not Buying " + e.getMessage());
+				}
+		return pro1;
+	}
+	
+	@Override
+	public void purchaseItem() {
+		// TODO Auto-generated method stub
+		
 	}
 }
