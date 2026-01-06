@@ -14,9 +14,12 @@ public class ProductDaoImpl implements ProductDao{
 	private static final String Insert="INSERT INTO products"
 			+ "(productName,productDescription,quantity,price) VALUES (?,?,?,?)";
 	
-	private static final String ID="SELECT * FROM products WHERE productId = ?";
+	private static final String GET_PRODUCT =
+            "SELECT * FROM products WHERE productId = ?";
+
+    private static final String UPDATE_QTY =
+            "UPDATE products SET quantity = ? WHERE productId = ?";
 	
-	private static final String UPDATE_QUANTITY="UPDATE products SET quantity = ? WHERE productId = ?";
 	@Override
 	public int addProduct(Product product) {
 		try(Connection con = JdbcConfig.getConnection();
@@ -35,48 +38,41 @@ public class ProductDaoImpl implements ProductDao{
 	}
 
 	@Override
-	public Product getProductById(int productId) {
-		try(Connection con = JdbcConfig.getConnection();
-		PreparedStatement ps = con.prepareStatement(ID)){
-		
-			Product pro1 = null; 
-			
-			ps.setInt(1, productId);
-			
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()) {
-			
-				new Product();
-				
-				pro1.setProductId(rs.getInt("productId"));
-				pro1.setProductName(rs.getString("productName"));
-				pro1.setProductDescription(rs.getString("productDescription"));
-				pro1.setQuantity(rs.getInt("quantity"));
-				pro1.setPrice(rs.getDouble("price"));
-				
-			}
-			return pro1;
-		}
-		catch(Exception e) {
-			throw new ProjectException("Id Not Found" + e.getMessage());
-		}
-	}
+    public Product getProductById(int productId) {
+        try (Connection con = JdbcConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(GET_PRODUCT)) {
 
-	@Override
-	public void updateProductQuantity(int productId, int updatedQty) {
-		try(Connection con = JdbcConfig.getConnection();
-		PreparedStatement ps = con.prepareStatement(UPDATE_QUANTITY)){
-		
-			ps.setInt(1, productId);
-			ps.setInt(2, updatedQty);
-			
-			ps.executeUpdate();
-		}
-		catch(Exception e) {
-			throw new ProjectException("Not Updated " + e.getMessage());
-		}
-		
-	}
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("productId"));
+                p.setProductName(rs.getString("productName"));
+                p.setProductDescription(rs.getString("productDescription"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setPrice(rs.getDouble("price"));
+                return p;
+            }
+            return null;
+        } catch (Exception e) {
+            throw new ProjectException("Product Not Found");
+        }
+    }
+
+    @Override
+    public boolean updateProductQuantity(int productId, int quantity) {
+        try (Connection con = JdbcConfig.getConnection();
+             PreparedStatement ps = con.prepareStatement(UPDATE_QTY)) {
+
+            ps.setInt(1, quantity);
+            ps.setInt(2, productId);
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            throw new ProjectException("Quantity Update Failed");
+        }
+    }
+
 
 }

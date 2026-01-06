@@ -9,11 +9,8 @@ public interface UserDao {
 
 	int addingUser(User user);
 	
-	void login(String username,String password);
+	boolean login(String username,String password);
 	
 	List<Product> findAll();
 	
-	Product buyProduct(int productId);
-	
-	void purchaseItem();
 }

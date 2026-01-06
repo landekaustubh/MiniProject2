@@ -20,9 +20,7 @@ public class UserDaoImpl implements UserDao{
 	
 	private static final String LOGIN="SELECT * FROM users WHERE username = ? AND password = ? ";
 	
-	private static final String DISPLAY="SELECT * FROM products";
-	
-	private static final String BUY_PRODUCT="SELECT * FROM products WHERE productId = ?";
+	private static final String DISPLAY = "SELECT * FROM products";
 	
 	@Override
 	public int addingUser(User user) {
@@ -45,7 +43,7 @@ public class UserDaoImpl implements UserDao{
 		}
 	}
 	@Override
-	public void login(String username, String password) {
+	public boolean login(String username, String password) {
 		try(Connection con = JdbcConfig.getConnection();
 		  PreparedStatement ps = con.prepareStatement(LOGIN)){
 			
@@ -57,9 +55,10 @@ public class UserDaoImpl implements UserDao{
 			
 				if(rs.next()) {
 				      System.out.println("login Successfully \n");
+				      return true;
 				}
 				else {
-					System.out.println("User Not Found \n");
+					return false;
 				}
 			
 		}
@@ -94,38 +93,4 @@ public class UserDaoImpl implements UserDao{
 					throw new ProjectException("Data is Not Available " + e.getMessage());
 				}
 		}
-
-	@Override
-	public Product buyProduct(int productId) {
-		
-		Product pro1 = null;
-		try(Connection con = JdbcConfig.getConnection();
-				PreparedStatement ps =  con.prepareStatement(BUY_PRODUCT)){
-				
-					pro1 = new Product();
-					
-					ps.setInt(1, productId);
-					
-					ResultSet rs = ps.executeQuery();
-					
-					while(rs.next()){
-					pro1.setProductId(rs.getInt("productId"));
-					pro1.setProductName(rs.getString("productName"));
-				    pro1.setProductDescription(rs.getString("productDescription"));
-					pro1.setQuantity(rs.getInt("quantity"));
-					pro1.setPrice(rs.getDouble("price"));
-					
-					}
-				}
-				catch(Exception e) {
-					throw new ProjectException("Not Buying " + e.getMessage());
-				}
-		return pro1;
-	}
-	
-	@Override
-	public void purchaseItem() {
-		// TODO Auto-generated method stub
-		
-	}
 }
