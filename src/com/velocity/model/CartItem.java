@@ -2,12 +2,13 @@ package com.velocity.model;
 
 public class CartItem {
 
-	 private int productId;
+	    private int productId;
 	    private String productName;
+	    private String productDescription;
 	    private double price;
 	    private int quantity;
 
-	    public int getProductId() {
+		public int getProductId() {
 	        return productId;
 	    }
 	    public void setProductId(int productId) {
@@ -19,6 +20,12 @@ public class CartItem {
 	    public void setProductName(String productName) {
 	        this.productName = productName;
 	    }
+	    public String getProductDescription() {
+			return productDescription;
+		}
+		public void setProductDescription(String productDescription) {
+			this.productDescription = productDescription;
+		}
 	    public double getPrice() {
 	        return price;
 	    }

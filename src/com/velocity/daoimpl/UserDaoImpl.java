@@ -20,8 +20,18 @@ public class UserDaoImpl implements UserDao{
 	
 	private static final String LOGIN="SELECT * FROM users WHERE username = ? AND password = ? ";
 	
-	private static final String DISPLAY = "SELECT * FROM products";
+	private static final String DISPLAY_PRODUCTS = "SELECT * FROM products";
 	
+	private static final String DISPLAY_USERS="SELECT * FROM users";
+	
+	private static final String USERNAME_EXIST="SELECT * FROM users WHERE username = ?";
+	
+	private static int loggedInUserId; 
+	
+	public static int getLoggedInUserId() {
+	    return loggedInUserId;
+	}
+
 	@Override
 	public int addingUser(User user) {
 		try(Connection con = JdbcConfig.getConnection();
@@ -54,6 +64,7 @@ public class UserDaoImpl implements UserDao{
 			ResultSet rs = ps.executeQuery();
 			
 				if(rs.next()) {
+					  loggedInUserId = rs.getInt("userId"); 
 				      System.out.println("login Successfully \n");
 				      return true;
 				}
@@ -69,28 +80,72 @@ public class UserDaoImpl implements UserDao{
 	
 	@Override
 		public List<Product> findAll() {
-		List<Product> pro1 = new ArrayList<>();
+		List<Product> list = new ArrayList<>();
 		
 		try(Connection con = JdbcConfig.getConnection();
-				PreparedStatement ps = con.prepareStatement(DISPLAY)){
+				PreparedStatement ps = con.prepareStatement(DISPLAY_PRODUCTS)){
 				
 					ResultSet rs = ps.executeQuery();
 					
 					while(rs.next()) {
-						Product pro2 = new Product();
-						pro2.setProductId(rs.getInt("productId"));
-					    pro2.setProductName(rs.getString("productName"));
-					    pro2.setProductDescription(rs.getString("productDescription"));
-						pro2.setQuantity(rs.getInt("quantity"));
-						pro2.setPrice(rs.getDouble("price"));
+						Product pro1 = new Product();
+						pro1.setProductId(rs.getInt("productId"));
+					    pro1.setProductName(rs.getString("productName"));
+					    pro1.setProductDescription(rs.getString("productDescription"));
+						pro1.setQuantity(rs.getInt("quantity"));
+						pro1.setPrice(rs.getDouble("price"));
 					    
-						pro1.add(pro2);
+						list.add(pro1);
 					}
 					
-					return pro1;
+					return list;
 				}
 				catch(Exception e) {
 					throw new ProjectException("Data is Not Available " + e.getMessage());
 				}
 		}
+	@Override
+	public List<User> findAll1() {
+		
+		List<User> list = new ArrayList<>();
+		try(Connection con = JdbcConfig.getConnection();
+		PreparedStatement ps = con.prepareStatement(DISPLAY_USERS)){
+		
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				User user1 = new User(); 
+			user1.setFirstName(rs.getString("firstName"));
+			user1.setLastName(rs.getString("lastName"));
+			user1.setUsername(rs.getString("username"));
+			user1.setPassword(rs.getString("password"));
+			user1.setCity(rs.getString("city"));
+			user1.setMailId(rs.getString("mailId"));
+			user1.setMobileNumber(rs.getInt("mobileNumber"));
+			
+			list.add(user1);
+			
+			}
+			return list;
+		}
+		catch(Exception e) {
+			throw new ProjectException("User Not Here" + e.getMessage());
+		}
+	}
+
+	@Override
+	public boolean usernameExist(String username) {
+		try(Connection con = JdbcConfig.getConnection();
+				PreparedStatement ps = con.prepareStatement(USERNAME_EXIST)){
+			
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			return rs.next();
+		}
+		catch(Exception e) {
+			throw new ProjectException("Error in username" + e.getMessage());
+		}
+	}
 }

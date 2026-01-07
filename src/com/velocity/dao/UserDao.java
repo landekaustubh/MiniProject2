@@ -13,4 +13,8 @@ public interface UserDao {
 	
 	List<Product> findAll();
 	
+	List<User> findAll1();
+	
+	boolean usernameExist(String username);
+	
 }
