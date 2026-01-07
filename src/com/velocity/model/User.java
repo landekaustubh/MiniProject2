@@ -91,8 +91,12 @@ public class User {
 	// To String Method
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", username=" + username + ", password="
-				+ password + ", city=" + city + ", mailId=" + mailId + ", mobileNumber=" + mobileNumber + "]";
+		return "\nFirst Name >> " + firstName 
+			  +"\nLastName >> " + lastName
+			  +"\nUsername >> " + username
+			  +"\nCity >> " + city
+			  +"\nMail Id >> " + mailId
+			  +"\nMobile Number >> " + mobileNumber + "\n---------------";
 	}
 
 	public static void insertData() {
