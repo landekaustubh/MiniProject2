@@ -56,7 +56,7 @@ public class ProductDaoImpl implements ProductDao{
             }
             return null;
         } catch (Exception e) {
-            throw new ProjectException("Product Not Found");
+            throw new ProjectException("Product Not Found" + e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class ProductDaoImpl implements ProductDao{
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
-            throw new ProjectException("Quantity Update Failed");
+            throw new ProjectException("Quantity Update Failed" + e.getMessage());
         }
     }
 

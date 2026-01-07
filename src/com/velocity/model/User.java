@@ -244,9 +244,9 @@ public class User {
 
 			Product product = productDao.getProductById(item.getProductId());
 
-			int remainingQty = product.getQuantity() - item.getQuantity();
+			int remainQty = product.getQuantity() - item.getQuantity();
 
-			productDao.updateProductQuantity(item.getProductId(), remainingQty);
+			productDao.updateProductQuantity(item.getProductId(), remainQty);
 
 			orderHistoryDao.saveHistory(userId, item);
 			
@@ -256,7 +256,7 @@ public class User {
 		System.out.println("Username>> " + username);
 		System.out.println("Total Bill Amount>> " + totalAmount);
 
-		Cart.clearCart();
+		
 	}
 
 	public static void displayAllUsers() {
@@ -307,7 +307,9 @@ public class User {
 	    if (product == null) {
 	        System.out.println("Product not found");
 	    } else {
-	        System.out.println("Quantity is>> " + product.getQuantity());
+	        System.out.println("Quantity is>> " + product.getQuantity()
+	        +"Product Name >> " + product.getProductName()
+	        +"Product Description >> " + product.getProductDescription());
 	    }
 	}
 

@@ -17,10 +17,6 @@ public class Cart {
 	    public static List<CartItem> getCartItems() {
 	        return cartList;
 	    }
-
-	    public static void clearCart() {
-	        cartList.clear();
-	    }
 	    
 	    public static void setTotalBillAmount(double amount) {
 	        totalBillAmount = amount;

@@ -1,0 +1,67 @@
+username = according to your mysql you can change in jdbcConfig
+password = according to your mysql you can change in jdbcConfig
+
+
+CREATE DATABASE ecommerce;
+
+USE ecommerce;
+
+CREATE TABLE products(
+productId INT AUTO_INCREMENT PRIMARY KEY,
+productName VARCHAR(100) NOT NULL,
+productDescription VARCHAR(100),
+quantity INT CHECK (quantity > 0),
+price DECIMAL(10,2)
+);
+
+INSERT INTO products(productName,productDescription,quantity,price) VALUES
+("One Plus Mobile","16 GB RAM, 128 GB Storage",3,37500);
+
+INSERT INTO products(productName,productDescription,quantity,price) VALUES
+("HP Pavilion Laptop", "8 GB RAM, 1 TB HDD", 3, 55000);
+
+INSERT INTO products(productName,productDescription,quantity,price) VALUES
+("Sony Headphones", "Noise Cancelling, Bluetooth", 10, 12000);
+
+INSERT INTO products(productName,productDescription,quantity,price) VALUES
+("Canon DSLR Camera", "24 MP, Full HD Video", 2, 45000);
+
+INSERT INTO products(productName,productDescription,quantity,price) VALUES
+("Apple iPad", "128 GB Storage, WiFi + Cellular", 5, 40000);
+
+
+CREATE TABLE users(
+userId INT AUTO_INCREMENT PRIMARY KEY,
+firstName VARCHAR(50) NOT NULL,
+lastName VARCHAR(50) NOT NULL,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(50) NOT NULL,
+city VARCHAR(50) NOT NULL,
+mailId VARCHAR(50),
+mobileNumber INT 
+);
+
+INSERT INTO users(firstName,lastName,username,password,city,mailId,mobileNumber)
+VALUES("Kaustubh","Lande","admin","admin","Pune","cashew@mail.com","75321598"); 
+
+INSERT INTO users(firstName,lastName,username,password,city,mailId,mobileNumber)
+VALUES("Kiran","Lande","ray","ray123","Pune","ray@mail.com","9512357"); 
+
+INSERT INTO users(firstName, lastName, username, password, city, mailId, mobileNumber) VALUES
+("Rahul", "Kumar", "rahul, "rahul123", "Delhi", "rahul@mail.com", "3457890");
+
+INSERT INTO users(firstName, lastName, username, password, city, mailId, mobileNumber) VALUES
+("Anjali", "Deshmukh", "anjali", "anjali123", "Mumbai", "anjali@mail.com", "3678901");
+
+INSERT INTO users(firstName, lastName, username, password, city, mailId, mobileNumber) VALUES
+("Vikram", "Singh", "vikram", "vikram123", "Bangalore", "vikram@mail.com", "9569012");
+
+
+For Storing the user history
+CREATE TABLE orderHistory(
+orderId INT AUTO_INCREMENT PRIMARY KEY,
+    userId VARCHAR(50),
+    productId INT,
+    productDescription VARCHAR(100),
+    quantity INT
+);

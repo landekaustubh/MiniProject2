@@ -31,10 +31,11 @@ public static void main(String[] args) {
 			case 2:
 				/*
 				 * for login admin username=admin and password=admin
-				 * you can get admins options
+				 * you can get admins options.
 				 * for user if exist you can directly login
 				 * otherwise you have to register first then 
-				 * you can get users options
+				 * you can get users options.
+				 * you can also use sample data.
 				 */
 				User.login();
 	    		break;
