@@ -65,3 +65,9 @@ orderId INT AUTO_INCREMENT PRIMARY KEY,
     productDescription VARCHAR(100),
     quantity INT
 );
+
+
+ALTER TABLE orderHistory
+ADD CONSTRAINT fk_user
+FOREIGN KEY (userId)
+REFERENCES users(userId);
